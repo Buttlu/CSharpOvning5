@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36603.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpOvning5", "CSharpOvning5\CSharpOvning5.csproj", "{9553F3CE-8FAE-451B-825C-E6181E60C96E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineMenu", "..\CLI\CommandLineMenu\CommandLineMenu.csproj", "{FB6470BF-047B-BA7B-BF0F-275366A8AF7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUtils", "..\ConsoleUtils\ConsoleUtils\ConsoleUtils.csproj", "{4ED9D3FD-8C4D-7FA6-418D-35F9E1518BD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9553F3CE-8FAE-451B-825C-E6181E60C96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9553F3CE-8FAE-451B-825C-E6181E60C96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9553F3CE-8FAE-451B-825C-E6181E60C96E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB6470BF-047B-BA7B-BF0F-275366A8AF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB6470BF-047B-BA7B-BF0F-275366A8AF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB6470BF-047B-BA7B-BF0F-275366A8AF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB6470BF-047B-BA7B-BF0F-275366A8AF7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED9D3FD-8C4D-7FA6-418D-35F9E1518BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED9D3FD-8C4D-7FA6-418D-35F9E1518BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED9D3FD-8C4D-7FA6-418D-35F9E1518BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED9D3FD-8C4D-7FA6-418D-35F9E1518BD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
