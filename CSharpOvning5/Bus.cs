@@ -1,5 +1,5 @@
 ﻿namespace CSharpOvning5;
 
-internal class Bus : IVehicle
+internal class Bus : Vehicle
 {
 }

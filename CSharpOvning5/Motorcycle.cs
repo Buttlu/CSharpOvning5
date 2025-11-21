@@ -1,6 +1,6 @@
 ﻿namespace CSharpOvning5
 {
-    internal class Motorcycle : IVehicle
+    internal class Motorcycle : Vehicle
     {
     }
 }
