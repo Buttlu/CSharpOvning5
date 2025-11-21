@@ -3,31 +3,40 @@ using System.Text.RegularExpressions;
 
 namespace CSharpOvning5.Vehicles;
 
-public abstract class Vehicle(string licenseNumber, Color color, uint numberOfWheels)
+public abstract partial class Vehicle
 {
-    private string _licenseNumber = "";
-    public string LicenseNumber { 
+    private string _licenseNumber = null!;
+    public string LicenseNumber
+    {
         get => _licenseNumber;
         init {
-            if (!ValidateLicenseNumber().IsMatch(licenseNumber))
-                throw new ArgumentException("Invalid license number format", nameof(licenseNumber));
+            // Validtes license numbers to follow the swedish format for car plates
+            if (!ValidateLicenseNumber().IsMatch(value))
+                throw new ArgumentException("Invalid license number format", value);
 
-            _licenseNumber = licenseNumber;
+            _licenseNumber = value;
         }
-    } 
-    public Color Color { get; } = color;
-    public uint NumberOfWheels { get; } = numberOfWheels;
+    }
+    public Color Color { get; }
+    public uint NumberOfWheels { get; }
 
-    // No extern implementation exists,
-    // just uses "extern" to avoid marking Vehicle as partial
-    [GeneratedRegex("[A-Z]{3} [0-9]{2}[A-Z0-9]", RegexOptions.IgnoreCase)]
-    protected static extern Regex ValidateLicenseNumber();
+    // Regular constructor since otherwise the LicenseNumber.Init was never called
+    public Vehicle(string licenseNumber, Color color, uint numberOfWheels)
+    {
+        LicenseNumber = licenseNumber;
+        Color = color;
+        NumberOfWheels = numberOfWheels;
+    }
+
+    // Validates swedish plate format, e.g.: ABC 123
+    [GeneratedRegex("^[A-Z]{3} [0-9]{2}[A-Z0-9]$", RegexOptions.IgnoreCase)]
+    private static partial Regex ValidateLicenseNumber();
 
     public override string ToString()
     {
         return
-            $"{Environment.NewLine}License Number: {licenseNumber}{Environment.NewLine}" +
-            $"Color: {color.Name}{Environment.NewLine}" +
+            $"{Environment.NewLine}License Number: {LicenseNumber}{Environment.NewLine}" +
+            $"Color: {Color.Name}{Environment.NewLine}" +
             $"Number of Wheels: {NumberOfWheels}{Environment.NewLine}";
     }
 }

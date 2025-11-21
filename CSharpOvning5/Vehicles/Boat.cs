@@ -13,6 +13,6 @@ internal class Boat(string licenseNumber, Color color, uint numberOfWheels, Fuel
         return
             $"{base.ToString()}" +
             $"Fuel Type: {FuelType}{Environment.NewLine}" +
-            $"Length: {Length}{Environment.NewLine}";
+            $"Length: {Length}{Environment.NewLine} meters";
     }
 }
