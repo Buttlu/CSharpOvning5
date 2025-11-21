@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CLI\CommandLineMenu\CommandLineMenu.csproj" />
     <ProjectReference Include="..\..\ConsoleUtils\ConsoleUtils\ConsoleUtils.csproj" />
+    <Using Include="ConsoleUtils"/>
   </ItemGroup>
 
 </Project>
