@@ -1,5 +1,5 @@
 ﻿namespace CSharpOvning5;
 
-internal interface Ihandler
+internal interface IHandler
 {
 }

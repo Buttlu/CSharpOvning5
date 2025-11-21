@@ -1,5 +1,5 @@
 ﻿namespace CSharpOvning5;
 
-internal class Handler
+internal class Handler : IHandler
 {
 }
