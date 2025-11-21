@@ -1,9 +1,15 @@
-﻿namespace CSharpOvning5;
+﻿using CommandLineMenu;
+using ConsoleUtils;
+
+namespace CSharpOvning5;
 
 internal class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        IUI ui = new ConsoleUI();
+        IMenuCLI menuCli = new MenuUI(ui);
+        Manager handler = new(ui, menuCli);
+        handler.Run();
     }
 }
