@@ -5,11 +5,13 @@ namespace CSharpOvning5;
 
 internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 {
-    private readonly int[] _garage = new int[capacity];
+    private readonly T[] _garage = new T[capacity];
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        foreach (T vehicle in _garage) {
+            yield return vehicle;
+        }
     }
 
     IEnumerator IEnumerable.GetEnumerator()
