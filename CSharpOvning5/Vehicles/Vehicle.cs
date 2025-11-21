@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace CSharpOvning5.Vehicles;
 
-internal abstract class Vehicle(string licenseNumber, Color color, uint numberOfWheels)
+public abstract class Vehicle(string licenseNumber, Color color, uint numberOfWheels)
 {
     private string _licenseNumber = "";
     public string LicenseNumber { 
@@ -22,4 +22,12 @@ internal abstract class Vehicle(string licenseNumber, Color color, uint numberOf
     // just uses "extern" to avoid marking Vehicle as partial
     [GeneratedRegex("[A-Z]{3} [0-9]{2}[A-Z0-9]", RegexOptions.IgnoreCase)]
     protected static extern Regex ValidateLicenseNumber();
+
+    public override string ToString()
+    {
+        return
+            $"{Environment.NewLine}License Number: {licenseNumber}{Environment.NewLine}" +
+            $"Color: {color.Name}{Environment.NewLine}" +
+            $"Number of Wheels: {NumberOfWheels}{Environment.NewLine}";
+    }
 }

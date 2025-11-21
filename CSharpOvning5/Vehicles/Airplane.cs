@@ -7,4 +7,12 @@ internal class Airplane(string licenseNumber, Color color, uint numberOfWheels, 
 {
     public FuelType FuelType { get; } = fuelType;
     public uint NumberOfSeats { get; } = numberOfSeats;
+
+    public override string ToString()
+    {
+        return
+            $"{base.ToString()}" +
+            $"Fuel Type: {FuelType}{Environment.NewLine}" +
+            $"Number of Seats: {NumberOfSeats}{Environment.NewLine}";
+    }
 }
