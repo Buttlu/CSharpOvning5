@@ -9,7 +9,8 @@ internal class Program
     {
         IUI ui = new ConsoleUI();
         IMenuCLI menuCli = new MenuUI(ui);
-        Manager handler = new(ui, menuCli);
-        handler.Run();
+        IHandler handler = new GarageHandler(10);
+        Manager manager = new(ui, menuCli, handler);
+        manager.Run();
     }
 }

@@ -4,17 +4,18 @@ using System.Text;
 
 namespace CSharpOvning5;
 
-public class GarageHandler(int capacity, IUI ui) : IHandler
+public class GarageHandler(int capacity) : IHandler
 {
     private IUI _ui = ui;
     private Garage<Vehicle> _garage = new(capacity);
 
-    public void DisplayGarageVehicles()
+    public string DisplayGarageVehicles()
     {
         StringBuilder builder = new();
         foreach (var vehicle in _garage) {
-            _ui.Println(vehicle.ToString());
+            builder.AppendLine(vehicle.ToString());
         }
+        return builder.ToString();
     }
 
     public void CountVehicleTypes()
@@ -22,19 +23,14 @@ public class GarageHandler(int capacity, IUI ui) : IHandler
 
     }
 
-    public bool AddVehicle(Vehicle vehicle)
+    public void AddVehicle(Vehicle vehicle)
     {
-        if (!_garage.Add(vehicle)) {
-            _ui.PrintErr("Garage is currently full");
-            return false;
+        _garage.Add(vehicle);
         }
         
-        return true;
-    }
-
-    public bool RemoveVehicle(Vehicle vehicle)
+    public void RemoveVehicle(string licenseNumber)
     {
-        return true;
+        _garage.Remove(licenseNumber);
     }
 
     public bool Seed()

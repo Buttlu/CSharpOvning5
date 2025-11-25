@@ -5,22 +5,35 @@ namespace CSharpOvning5;
 
 public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 {
-    private readonly T[] _garage = new T[capacity];
-    private int _index = 0;
+    private readonly T?[] _garage = new T?[capacity];
 
-    public bool Add(T vehicle)
+    public void Add(T vehicle)
     {
-        if (_index >= capacity)
-            return false;
+        for (int i = 0; i < _garage.Length; i++) {
+            if (_garage[i] is null) {
+                _garage[i++] = vehicle;
+                return;
+            }
+        }
+        throw new ArgumentOutOfRangeException("Garage is null");
+    }
 
-        _garage[_index++] = vehicle;
-        return true;
+    public void Remove(string licenseNumber)
+    {
+        for (int i = 0; i < _garage.Length;i++) {
+            if (_garage[i]?.LicenseNumber == licenseNumber) {
+                _garage[i] = null;
+                return;
+            }
+        }
+        throw new ArgumentException("Vehicle not found", licenseNumber);
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        for (int i = 0; i < _index; i++) {
-            yield return _garage[i];
+        for (int i = 0; i < _garage.Length; i++) {
+            if (_garage[i] is not null)
+                yield return _garage[i]!;
         }
     }
 

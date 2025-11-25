@@ -28,8 +28,8 @@ public abstract partial class Vehicle
         NumberOfWheels = numberOfWheels;
     }
 
-    // Validates swedish plate format, e.g.: ABC 123, ABC 12E
-    [GeneratedRegex("^[A-Z]{3} [0-9]{2}[A-Z0-9]$", RegexOptions.IgnoreCase)]
+    // Validates swedish plate format, e.g.: ABC123, ABC12E
+    [GeneratedRegex("^[A-Z]{3}[0-9]{2}[A-Z0-9]$", RegexOptions.IgnoreCase)]
     private static partial Regex ValidateLicenseNumber();
 
     public override string ToString()
