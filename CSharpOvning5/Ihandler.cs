@@ -1,4 +1,6 @@
 ﻿using CSharpOvning5.Vehicles;
+using Microsoft.VisualBasic;
+using System.Collections;
 using System.Drawing;
 
 namespace CSharpOvning5
@@ -6,14 +8,13 @@ namespace CSharpOvning5
     public interface IHandler
     {
         void AddVehicle(Vehicle vehicle);
-        void CountVehicleTypes();
+        IEnumerable<Vehicle> GetVehicles();
         string DisplayGarageVehicles();
-        Vehicle? GetVehicleByLicensenumber(string number);
-        IEnumerable<Vehicle> GetVehiclesByColor(Color color);
-        IEnumerable<Vehicle> GetVehiclesByType(string type);
-        IEnumerable<Vehicle> GetVehiclesByWheelCount(int count);
+        Vehicle? GetVehicleByLicensenumber(IEnumerable<Vehicle> collection, string number);
+        IEnumerable<Vehicle> GetVehiclesByColor(IEnumerable<Vehicle> collection, Color color);
+        IEnumerable<Vehicle> GetVehiclesByType(IEnumerable<Vehicle> collection, string type);
+        IEnumerable<Vehicle> GetVehiclesByWheelCount(IEnumerable<Vehicle> collection, int count);
         void RemoveVehicle(string licenseNumber);
-        IEnumerable<Vehicle> SearchForVehicles();
         bool Seed();
     }
 }

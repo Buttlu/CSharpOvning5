@@ -6,7 +6,6 @@ namespace CSharpOvning5;
 
 public class GarageHandler(int capacity) : IHandler
 {
-    private IUI _ui = ui;
     private Garage<Vehicle> _garage = new(capacity);
 
     public string DisplayGarageVehicles()
@@ -18,16 +17,16 @@ public class GarageHandler(int capacity) : IHandler
         return builder.ToString();
     }
 
-    public void CountVehicleTypes()
+    public IEnumerable<Vehicle> GetVehicles()
     {
-
+        return _garage.ToList();
     }
 
     public void AddVehicle(Vehicle vehicle)
     {
         _garage.Add(vehicle);
-        }
-        
+    }
+
     public void RemoveVehicle(string licenseNumber)
     {
         _garage.Remove(licenseNumber);
@@ -35,19 +34,28 @@ public class GarageHandler(int capacity) : IHandler
 
     public bool Seed()
     {
-        AddVehicle(new Motorcycle("ABC 123", Color.Red, 2, FuelType.Gasoline, false));
-        AddVehicle(new Airplane("ABC 12C", Color.White, 22, FuelType.JetFuel, 200));
-        AddVehicle(new Car("CAR 420", Color.Yellow, 4, FuelType.Electric, 5, "Volvo"));
-        AddVehicle(new Car("BAR 39F", Color.Green, 4, FuelType.Gasoline, 2, "Ferrari"));
-        AddVehicle(new Boat("ZOO 100", Color.Blue, 0, FuelType.JetFuel, 15));
+        try {
+            AddVehicle(new Motorcycle("ABC123", Color.Red, 2, FuelType.Gasoline, false));
+            AddVehicle(new Airplane("ABC12C", Color.White, 22, FuelType.JetFuel, 200));
+            AddVehicle(new Car("CAR420", Color.Yellow, 4, FuelType.Electric, 5, "Volvo"));
+            AddVehicle(new Car("BAR39F", Color.Green, 4, FuelType.Gasoline, 2, "Ferrari"));
+            AddVehicle(new Boat("ZOO100", Color.Blue, 0, FuelType.JetFuel, 15));
+        } catch (ArgumentOutOfRangeException) {
+            return false;
+        }
 
         return true;
     }
 
-    public IEnumerable<Vehicle> SearchForVehicles()
-    {
-        IEnumerable<Vehicle> foundVehicles = _garage.ToList();
+    public Vehicle? GetVehicleByLicensenumber(IEnumerable<Vehicle> collection, string number) 
+        => collection.FirstOrDefault(v => v.LicenseNumber == number);
 
-        return foundVehicles.GetVehiclesByColor(Color.White).GetVehiclesByType(typeof(Motorcycle).Name);
-    }
+    public IEnumerable<Vehicle> GetVehiclesByType(IEnumerable<Vehicle> collection, string type)
+        => collection.Where(v => v.GetType().Name.Equals(type, StringComparison.CurrentCultureIgnoreCase));
+
+    public IEnumerable<Vehicle> GetVehiclesByColor(IEnumerable<Vehicle> collection, Color color)
+        => collection.Where(v => v.Color == color);
+
+    public IEnumerable<Vehicle> GetVehiclesByWheelCount(IEnumerable<Vehicle> collection, int count)
+        => collection.Where(v => v.NumberOfWheels >= count);
 }
