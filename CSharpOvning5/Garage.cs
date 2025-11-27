@@ -16,7 +16,7 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
                 return;
             }
         }
-        throw new ArgumentOutOfRangeException("Garage is null");
+        throw new ArgumentOutOfRangeException(nameof(vehicle), "Garage is null");
     }
 
     public void Remove(string licenseNumber)
@@ -27,7 +27,7 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
                 return;
             }
         }
-        throw new ArgumentException("Vehicle not found", licenseNumber);
+        throw new ArgumentException("Vehicle not found", nameof(licenseNumber));
     }
 
     public string GetGroups()
