@@ -54,7 +54,7 @@ public class GarageHandler(int capacity) : IHandler
     public string GetVehiclesByGroup() => _garage.GetGroups();
 
     public Vehicle? GetVehicleByLicensenumber(string number) 
-        => _garage.FirstOrDefault(v => v.LicenseNumber == number);
+        => _garage.FirstOrDefault(v => v.LicenseNumber.Equals(number, StringComparison.CurrentCultureIgnoreCase));
 
     public IEnumerable<Vehicle> GetVehiclesByType(IEnumerable<Vehicle> collection, string type)
         => collection.Where(v => v.GetType().Name.Equals(type, StringComparison.CurrentCultureIgnoreCase));

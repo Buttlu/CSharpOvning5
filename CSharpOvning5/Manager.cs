@@ -56,12 +56,67 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         Color color = GarageHandlerHelpers.GetColor(_ui);
         FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
-        
+
+        Dictionary<string, Action<string, Color, uint, FuelType>> selectType = new() {
+            { "Airplane", AddAirplane }, 
+            { "Boat", AddBoat }, 
+            { "Bus", AddBus }, 
+            { "Car", AddCar }, 
+            { "Motorcycle", AddMotorcycle }
+        };
+
+        var (_, vehicle) = _menuCli.CliMenu("Select the vehicle type", [..selectType.Keys]);        
         try {
-            _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, true));
+            selectType[vehicle].Invoke(licenseNumber, color, numberOfWheels, fuelType);
+        } catch (KeyNotFoundException) {
+            _ui.PrintErr("Unknow vehicle selected");
+        }
+    }
+
+    private void AddAirplane(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType) {
+        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);                    
+        try {
+            _handler.AddVehicle(new Airplane(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats));
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         }
+    }
+    private void AddBoat(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
+    {
+        uint length = (uint)_ui.GetInt("Type the length: ", mustBeAboveZero: true);
+        try {
+            _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
+        } catch (ArgumentOutOfRangeException ex) {
+            _ui.PrintErr(ex.Message);
+        }
+    }
+    private void AddBus(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType) {        
+        bool canBend = _ui.GetBool("Can the bus bend (y/n)?: ");
+        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
+        try {
+            _handler.AddVehicle(new Bus(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, canBend));
+        } catch (ArgumentOutOfRangeException ex) {
+            _ui.PrintErr(ex.Message);
+        }        
+    }
+    private void AddCar(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
+    {       
+        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
+        string manufacturer = _ui.GetString("Type the manufacturer: ");
+        try {
+            _handler.AddVehicle(new Car(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, manufacturer));
+        } catch (ArgumentOutOfRangeException ex) {
+            _ui.PrintErr(ex.Message);
+        }
+    }
+    private void AddMotorcycle(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
+    {       
+        bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
+        try {
+            _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));
+        } catch (ArgumentOutOfRangeException ex) {
+            _ui.PrintErr(ex.Message);
+        }     
     }
 
     private void RemoveVehicle()
@@ -101,7 +156,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
     {
         IEnumerable<Vehicle> vehicles = _handler.GetVehicles();
         // ------------- WIP -------------
-        // "Do you want to filter for X?" (y / n)
+        // "Do you want to filter for X?" (y/n)
         // if y 
         //     GarageHandlerHelpers.GetX();
         //     vehicles = _handler.GetVehicleByX();
