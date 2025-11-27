@@ -41,9 +41,7 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 
         StringBuilder builder = new();
         foreach (var group in groups) {
-            if (string.IsNullOrWhiteSpace(group.VehicleType))
-                builder.AppendLine($"Total Vehicles: {group.Count}");
-            else
+            if (!string.IsNullOrWhiteSpace(group.VehicleType))                
                 builder.AppendLine($"Vehicle Type: {group.VehicleType}, Count: {group.Count}");
         }
         return builder.ToString();
