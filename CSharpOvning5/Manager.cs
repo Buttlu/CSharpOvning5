@@ -20,7 +20,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         // Dictionary that holds the main menu options and which method they use
         Dictionary<string, Action> mainMenuOptions = new() {
             { "Create a new garage", CreateGarage },
-            { "Add vehicle", AddVehicle },
+            { "Park vehicle", AddVehicle },
             { "Remove vehicle", RemoveVehicle },
             { "Display all vehicles", DisplayGarage },
             { "Display groups", DisplayVehicleGroups },
@@ -28,11 +28,11 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             { "Find vehicles by attributes", SearchForVehiclesByAttributes },
             { "Quit", () => Environment.Exit(0) }
         };
-        int index;
+        
         string key;
         bool first = true;
         do {
-            (index, key) = _menuCli.CliMenu("Main menu",  first, [.. mainMenuOptions.Keys]);
+            (_, key) = _menuCli.CliMenu("Main menu",  first, [.. mainMenuOptions.Keys]);
             mainMenuOptions[key].Invoke();
             first = false;
         } while (true);
@@ -40,9 +40,11 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void CreateGarage()
     {
-        _ui.Println("This will replace the current garage, type 'q' to cancel");
-        string? input = _ui.GetInput();
-        if (input is not null && input[0] == 'q') return;
+        if (_handler is not null) {
+            _ui.Println("This will replace the current garage, type 'q' to cancel");
+            string? input = _ui.GetInput();
+            if (input is not null && Char.ToLower(input[0]) == 'q') return;
+        }
 
         int capacity = _ui.GetInt("Type number of vehicles that can be parked: ", mustBeAboveZero: true);
         _handler = new GarageHandler(capacity);
@@ -50,8 +52,13 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void AddVehicle()
     {
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);        
+        Color color = GarageHandlerHelpers.GetColor(_ui);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
+        
         try {
-            _handler.AddVehicle(new Motorcycle("NEJ666", Color.Red, 3, FuelType.JetFuel, true));
+            _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, true));
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         }
@@ -94,16 +101,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
     {
         IEnumerable<Vehicle> vehicles = _handler.GetVehicles();
         // ------------- WIP -------------
-
-        _ui.Println("Searching for vehicles using filters. Leave blank to ignore");
-
-        _ui.Println("Type number of wheels: ");
-        string? input = _ui.GetInput();
-        if (!string.IsNullOrWhiteSpace(input) && int.TryParse(input, out int wheelCount)) {
-            vehicles = _handler.GetVehiclesByWheelCount(vehicles, wheelCount);
-        }
-
-        _ui.Println("Type the color: ");
-        Color color = GarageHandlerHelpers.GetColor(_ui);
+        // "Do you want to filter for X?" (y / n)
+        // if y 
+        //     GarageHandlerHelpers.GetX();
+        //     vehicles = _handler.GetVehicleByX();
     }
 }
