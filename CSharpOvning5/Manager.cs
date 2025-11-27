@@ -46,9 +46,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     private void RemoveVehicle()
     {
-        // logic to get the license number from the user
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);
         try {
-            _handler.RemoveVehicle("ABC123");
+            _handler.RemoveVehicle(licenseNumber);
         } catch (ArgumentException ex) {
             _ui.PrintErr(ex.Message);
         }
@@ -68,8 +68,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     private void SearchForVehicleByLicenseNumber()
     {
-        // logic to get the license number from the user
-        string licenseNumber = "ABC123";
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);
         Vehicle? vehicle = _handler.GetVehicleByLicensenumber(licenseNumber);
         if (vehicle is null) {
             _ui.PrintErr($"No vehicle found with license number \"{licenseNumber}\"");
