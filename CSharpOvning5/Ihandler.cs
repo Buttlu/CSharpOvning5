@@ -11,7 +11,7 @@ namespace CSharpOvning5
         IEnumerable<Vehicle> GetVehicles();
         string DisplayGarageVehicles();
         string GetVehiclesByGroup();
-        Vehicle? GetVehicleByLicensenumber(IEnumerable<Vehicle> collection, string number);
+        Vehicle? GetVehicleByLicensenumber(string number);
         IEnumerable<Vehicle> GetVehiclesByColor(IEnumerable<Vehicle> collection, Color color);
         IEnumerable<Vehicle> GetVehiclesByType(IEnumerable<Vehicle> collection, string type);
         IEnumerable<Vehicle> GetVehiclesByWheelCount(IEnumerable<Vehicle> collection, int count);

@@ -13,22 +13,45 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
     public void Run()
     {
         if (!_handler.Seed())
-            _ui.Println("Garage is full");        
+            _ui.Println("Garage is full");
+
+        // Dictionary that holds the main menu options and which method they use
+        Dictionary<string, Action> mainMenuOptions = new() {
+            { "Add vehicle", AddVehicle },
+            { "Remove vehicle", RemoveVehicle },
+            { "Display all vehicles", DisplayGarage },
+            { "Display groups", DisplayVehicleGroups },
+            { "Find vehicle by license number", SearchForVehicleByLicenseNumber },
+            { "Find vehicles by attributes", SearchForVehiclesByAttributes },
+            { "Quit", () => Environment.Exit(0) }
+        };
+        int index;
+        string key;
+        bool first = true;
+        do {
+            (index, key) = _menuCli.CliMenu("Main menu",  first, [.. mainMenuOptions.Keys]);
+            mainMenuOptions[key].Invoke();
+            first = false;
+        } while (true);
     }
 
     private void AddVehicle()
     {
         try {
             _handler.AddVehicle(new Motorcycle("NEJ666", Color.Red, 3, FuelType.JetFuel, true));
-        } catch (ArgumentOutOfRangeException) {
-            _ui.Println("Garage is full");
+        } catch (ArgumentOutOfRangeException ex) {
+            _ui.PrintErr(ex.Message);
         }
     }
 
     private void RemoveVehicle()
     {
         // logic to get the license number from the user
-        _handler.RemoveVehicle("ABC123");
+        try {
+            _handler.RemoveVehicle("ABC123");
+        } catch (ArgumentException ex) {
+            _ui.PrintErr(ex.Message);
+        }
     }
 
     private void DisplayGarage()
@@ -43,9 +66,16 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
         _ui.Println(vehicleGroups);
     }
 
-    private void SearchForVehiclesByLicenseNumber()
+    private void SearchForVehicleByLicenseNumber()
     {
-
+        // logic to get the license number from the user
+        string licenseNumber = "ABC123";
+        Vehicle? vehicle = _handler.GetVehicleByLicensenumber(licenseNumber);
+        if (vehicle is null) {
+            _ui.PrintErr($"No vehicle found with license number \"{licenseNumber}\"");
+            return;
+        }
+        _ui.Println(vehicle.ToString() + Environment.NewLine);
     }
 
     private void SearchForVehiclesByAttributes()
