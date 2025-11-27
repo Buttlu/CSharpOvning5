@@ -90,12 +90,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
             vehicles = _handler.GetVehiclesByWheelCount(vehicles, wheelCount);
         }
 
-        string color = _ui.GetString("Type color: ");
-        Color newColor = Color.FromName(color);
-        while (newColor.A == 0) {
-            _ui.Println("A known color was not found, please try again");
-            color = _ui.GetString("Color name: ");
-            newColor = Color.FromName(color);
-        }
+        _ui.Println("Type the color: ");
+        Color color = GarageHandlerHelpers.GetColor(_ui);
     }
 }
