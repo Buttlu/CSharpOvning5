@@ -1,4 +1,5 @@
 ﻿using CommandLineMenu;
+using ConsoleUtils;
 using CSharpOvning5.Vehicles;
 using System.Drawing;
 
@@ -22,8 +23,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
 
         string vehicles = _handler.DisplayGarageVehicles();
         _ui.Println(vehicles);
-        foreach (var item in _handler.SearchForVehicles()) {
-            _ui.Println($"1 {item}");
+
+        string vehicleGroups = _handler.GetVehiclesByGroup();
+        _ui.Println(vehicleGroups);
         }
     }
 

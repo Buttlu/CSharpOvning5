@@ -43,9 +43,10 @@ public class GarageHandler(int capacity) : IHandler
         } catch (ArgumentOutOfRangeException) {
             return false;
         }
-
         return true;
     }
+
+    public string GetVehiclesByGroup() => _garage.GetGroups();
 
     public Vehicle? GetVehicleByLicensenumber(IEnumerable<Vehicle> collection, string number) 
         => collection.FirstOrDefault(v => v.LicenseNumber == number);

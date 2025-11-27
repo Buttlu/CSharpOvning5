@@ -1,5 +1,6 @@
 ﻿using CSharpOvning5.Vehicles;
 using System.Collections;
+using System.Text;
 
 namespace CSharpOvning5;
 
@@ -27,6 +28,25 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
             }
         }
         throw new ArgumentException("Vehicle not found", licenseNumber);
+    }
+
+    public string GetGroups()
+    {
+        var groups = _garage.GroupBy(v => v?.GetType().Name)
+                                        .Select(g =>
+                                        new {
+                                            VehicleType = g.Key,
+                                            Count = g.Count(),
+                                        });
+
+        StringBuilder builder = new();
+        foreach (var group in groups) {
+            if (string.IsNullOrWhiteSpace(group.VehicleType))
+                builder.AppendLine($"Total Vehicles: {group.Count}");
+            else
+                builder.AppendLine($"Vehicle Type: {group.VehicleType}, Count: {group.Count}");
+        }
+        return builder.ToString();
     }
 
     public IEnumerator<T> GetEnumerator()
