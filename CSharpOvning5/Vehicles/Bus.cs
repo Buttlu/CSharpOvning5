@@ -15,6 +15,6 @@ internal class Bus(string licenseNumber, Color color, uint numberOfWheels, FuelT
             $"{base.ToString()}" +
             $"Fuel Type: {FuelType}{Environment.NewLine}" +
             $"number of Seats: {NumberOfSeats}{Environment.NewLine}" +
-            $"Can it Bend: {(CanBend ? "Yes" : "No")}";
+            $"Can it Bend: {(CanBend ? "Yes" : "No")}{Environment.NewLine}";
     }
 }

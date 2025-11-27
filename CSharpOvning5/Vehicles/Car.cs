@@ -15,6 +15,6 @@ internal class Car(string licenseNumber, Color color, uint numberOfWheels, FuelT
             $"{base.ToString()}" +
             $"Fuel Type: {FuelType}{Environment.NewLine}" +
             $"Number of Seats: {NumberOfSeats}{Environment.NewLine}" +
-            $"Manufacturer: {Manufacturer}";
+            $"Manufacturer: {Manufacturer}{Environment.NewLine}";
     }
 }

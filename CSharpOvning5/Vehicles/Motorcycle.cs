@@ -14,7 +14,7 @@ namespace CSharpOvning5.Vehicles
             return
                 $"{base.ToString()}" +
                 $"Fuel Type: {FuelType}{Environment.NewLine}" +
-                $"Has a Side Cart: {(hasSideCart ? "Yes" : "No")}";
+                $"Has a Side Cart: {(HasSideCart ? "Yes" : "No")}{Environment.NewLine}";
         }
     }
 }

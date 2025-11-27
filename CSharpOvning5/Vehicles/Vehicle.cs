@@ -35,7 +35,7 @@ public abstract partial class Vehicle
     public override string ToString()
     {
         return
-            $"{Environment.NewLine}Vehicle type: {GetType().Name}{Environment.NewLine}" +
+            $"Vehicle type: {GetType().Name}{Environment.NewLine}" +
             $"License Number: {LicenseNumber}{Environment.NewLine}" +
             $"Color: {Color.Name}{Environment.NewLine}" +
             $"Number of Wheels: {NumberOfWheels}{Environment.NewLine}";
