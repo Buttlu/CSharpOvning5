@@ -7,6 +7,11 @@ namespace CSharpOvning5;
 public class GarageHandler(int capacity) : IHandler
 {
     private Garage<Vehicle> _garage = new(capacity);
+    
+    public void CreateGarage(int capacity)
+    {
+        _garage = new Garage<Vehicle>(capacity);
+    }
 
     public string DisplayGarageVehicles()
     {

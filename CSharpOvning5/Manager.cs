@@ -5,18 +5,21 @@ using System.Drawing;
 
 namespace CSharpOvning5;
 
-internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
+internal class Manager(IUI ui, IMenuCLI menuCli)
 {
     private readonly IUI _ui = ui;
     private readonly IMenuCLI _menuCli = menuCli;
-    private readonly IHandler _handler = handler;
+    private IHandler _handler = null!;
     public void Run()
     {
+        CreateGarage();
+
         if (!_handler.Seed())
             _ui.Println("Garage is full");
 
         // Dictionary that holds the main menu options and which method they use
         Dictionary<string, Action> mainMenuOptions = new() {
+            { "Create a new garage", CreateGarage },
             { "Add vehicle", AddVehicle },
             { "Remove vehicle", RemoveVehicle },
             { "Display all vehicles", DisplayGarage },
@@ -33,6 +36,16 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IHandler handler)
             mainMenuOptions[key].Invoke();
             first = false;
         } while (true);
+    }
+
+    private void CreateGarage()
+    {
+        _ui.Println("This will replace the current garage, type 'q' to cancel");
+        string? input = _ui.GetInput();
+        if (input is not null && input[0] == 'q') return;
+
+        int capacity = _ui.GetInt("Type number of vehicles that can be parked: ", mustBeAboveZero: true);
+        _handler = new GarageHandler(capacity);
     }
 
     private void AddVehicle()
