@@ -26,9 +26,11 @@ internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Ve
         if (!Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
             throw new ArgumentException("Invalid license number", nameof(licenseNumber));
 
+        licenseNumber = licenseNumber.ToLower();
+
         // Tries to find a matching license number and sets it to null if found
         for (int i = 0; i < _garage.Length; i++) {
-            if (_garage[i]?.LicenseNumber == licenseNumber) {
+            if (_garage[i]?.LicenseNumber.ToLower() == licenseNumber) {
                 _garage[i] = null;
                 return;
             }

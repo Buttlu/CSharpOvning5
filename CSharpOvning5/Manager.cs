@@ -17,7 +17,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         CreateGarage();
 
         if (!_handler.Seed())
-            _ui.Println("Garage is full");
+            _ui.PrintErr("Garage is full");
 
         // Dictionary that holds the main menu options and which method they use
         Dictionary<string, Action> mainMenuOptions = new() {
@@ -74,7 +74,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         try {
             selectType[vehicle].Invoke(licenseNumber, color, numberOfWheels);
         } catch (KeyNotFoundException) {
-            _ui.PrintErr("Unknow vehicle selected");
+            _ui.PrintErr("Unknown vehicle selected");
         }
     }    
 
