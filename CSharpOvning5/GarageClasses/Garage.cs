@@ -8,7 +8,7 @@ internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 {
     private readonly T?[] _garage = new T?[capacity];
 
-    internal void Add(T vehicle)
+    public void Add(T vehicle)
     {       
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i] is null) {
@@ -19,7 +19,7 @@ internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
         throw new ArgumentOutOfRangeException(nameof(vehicle), "Garage is null");
     }
 
-    internal void Remove(string licenseNumber)
+    public void Remove(string licenseNumber)
     {
         for (int i = 0; i < _garage.Length;i++) {
             if (_garage[i]?.LicenseNumber == licenseNumber) {
@@ -28,23 +28,6 @@ internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
             }
         }
         throw new ArgumentException("Vehicle not found", nameof(licenseNumber));
-    }
-
-    internal string GetGroups()
-    {
-        var groups = _garage.GroupBy(v => v?.GetType().Name)
-                                        .Select(g =>
-                                        new {
-                                            VehicleType = g.Key,
-                                            Count = g.Count(),
-                                        });
-
-        StringBuilder builder = new();
-        foreach (var group in groups) {
-            if (!string.IsNullOrWhiteSpace(group.VehicleType))                
-                builder.AppendLine($"Vehicle Type: {group.VehicleType}, Count: {group.Count}");
-        }
-        return builder.ToString();
     }
 
     public IEnumerator<T> GetEnumerator()

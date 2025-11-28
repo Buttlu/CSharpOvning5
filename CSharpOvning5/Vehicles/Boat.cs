@@ -8,7 +8,7 @@ internal class Boat(string licenseNumber, Color color, uint numberOfWheels, Fuel
     internal FuelType FuelType { get; } = fuelType;
     internal uint Length { get; } = length;
 
-    internal override string ToString()
+    public override string ToString()
     {
         return
             $"{base.ToString()}" +

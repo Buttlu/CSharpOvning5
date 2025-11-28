@@ -52,7 +52,21 @@ internal class GarageHandler(int capacity) : IHandler
         return true;
     }
 
-    public string GetVehiclesByGroup() => _garage.GetGroups();
+    public string GetVehiclesByGroup() {
+        var groups = _garage.GroupBy(v => v?.GetType().Name)
+                                        .Select(g =>
+                                        new {
+                                            VehicleType = g.Key,
+                                            Count = g.Count(),
+                                        });
+
+        StringBuilder builder = new();
+        foreach (var group in groups) {
+            if (!string.IsNullOrWhiteSpace(group.VehicleType))
+                builder.AppendLine($"Vehicle Type: {group.VehicleType}, Count: {group.Count}");
+        }
+        return builder.ToString();
+    }
 
     public Vehicle? GetVehicleByLicensenumber(string number) 
         => _garage.FirstOrDefault(v => v.LicenseNumber.Equals(number, StringComparison.CurrentCultureIgnoreCase));

@@ -32,7 +32,7 @@ internal abstract partial class Vehicle
     [GeneratedRegex("^[A-Z]{3}[0-9]{2}[A-Z0-9]$", RegexOptions.IgnoreCase)]
     internal static partial Regex ValidateLicenseNumber();
 
-    internal override string ToString()
+    public override string ToString()
     {
         return
             $"Vehicle type: {GetType().Name}{Environment.NewLine}" +

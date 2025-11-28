@@ -6,10 +6,9 @@ namespace CSharpOvning5.Vehicles
         : Vehicle(licenseNumber, color, numberOfWheels)
     {
         internal FuelType FuelType { get; } = fuelType;
-        // TODO: maybe add Add...() & Remove...() SideCart functions. 
         internal bool HasSideCart { get; } = hasSideCart;
 
-        internal override string ToString()
+        public override string ToString()
         {
             return
                 $"{base.ToString()}" +

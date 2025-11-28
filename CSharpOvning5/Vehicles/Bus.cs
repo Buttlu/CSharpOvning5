@@ -9,7 +9,7 @@ internal class Bus(string licenseNumber, Color color, uint numberOfWheels, FuelT
     internal FuelType FuelType { get; } = fuelType;
     internal bool CanBend { get; } = canBend;
 
-    internal override string ToString()
+    public override string ToString()
     {
         return
             $"{base.ToString()}" +

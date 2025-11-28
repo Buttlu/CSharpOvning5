@@ -9,7 +9,7 @@ internal class Car(string licenseNumber, Color color, uint numberOfWheels, FuelT
     internal FuelType FuelType { get; } = fuelType;
     internal string Manufacturer { get; } = manufacturer;
 
-    internal override string ToString()
+    public override string ToString()
     {
         return
             $"{base.ToString()}" +
