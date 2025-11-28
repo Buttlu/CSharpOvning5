@@ -22,7 +22,8 @@ internal static class GarageHandlerHelpers
     {
         string color = ui.GetString("Type color: ");
         Color newColor = Color.FromName(color);
-        // If the alpha (A) channel is 0, that means a color wasn't found
+        // If the alpha (A) channel is 0, that means a color wasn't found 
+        // (if the name is not know FromName returns new Color(0,0,0,0))
         while(newColor.A == 0) {
             ui.Println("A known color was not found, please try again");
             color = ui.GetString("Color name: ");

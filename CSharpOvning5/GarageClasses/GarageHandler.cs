@@ -71,6 +71,8 @@ internal class GarageHandler(int capacity) : IHandler
     public Vehicle? GetVehicleByLicensenumber(string number) 
         => _garage.FirstOrDefault(v => v.LicenseNumber.Equals(number, StringComparison.CurrentCultureIgnoreCase));
 
+    // Accepts an external collectíon so that Manager.SearchForVehiclesByAttributes 
+    // can keep narrowing down it's copy of 
     public IEnumerable<Vehicle> GetVehiclesByType(IEnumerable<Vehicle> collection, string type)
         => collection.Where(v => v.GetType().Name.Equals(type, StringComparison.CurrentCultureIgnoreCase));
 

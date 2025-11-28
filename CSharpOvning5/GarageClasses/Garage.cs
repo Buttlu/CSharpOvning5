@@ -9,18 +9,24 @@ internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Ve
 
     public void Add(T vehicle)
     {
-
+        // Loops through the array until it finds the first null entry, and replaces it
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i] is null) {
                 _garage[i++] = vehicle;
                 return;
             }
         }
+        // Throws and exception if the array is full
         throw new ArgumentOutOfRangeException(nameof(vehicle), "Garage is null");
     }
 
     public void Remove(string licenseNumber)
     {
+        // Validates the license number first. 
+        if (!Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
+            throw new ArgumentException("Invalid license number", nameof(licenseNumber));
+
+        // Tries to find a matching license number and sets it to null if found
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i]?.LicenseNumber == licenseNumber) {
                 _garage[i] = null;

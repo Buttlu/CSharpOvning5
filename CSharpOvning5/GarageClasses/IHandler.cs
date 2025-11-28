@@ -1,6 +1,4 @@
 ﻿using CSharpOvning5.Vehicles;
-using Microsoft.VisualBasic;
-using System.Collections;
 using System.Drawing;
 
 namespace CSharpOvning5.GarageClasses

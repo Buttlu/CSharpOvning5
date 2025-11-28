@@ -6,6 +6,5 @@ namespace CSharpOvning5.GarageClasses
     {
         void Add(T vehicle);
         void Remove(string licenseNumber);
-        //IEnumerator<T> GetEnumerator();
     }
 }
