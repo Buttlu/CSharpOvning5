@@ -58,7 +58,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
 
-        Dictionary<string, Action<string, Color, uint, FuelType>> selectType = new() {
+        Dictionary<string, Action<string, Color, uint>> selectType = new() {
             { "Airplane", AddAirplane }, 
             { "Boat", AddBoat }, 
             { "Bus", AddBus }, 
@@ -68,13 +68,14 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
         var (_, vehicle) = _menuCli.CliMenu("Select the vehicle type", [..selectType.Keys]);        
         try {
-            selectType[vehicle].Invoke(licenseNumber, color, numberOfWheels, fuelType);
+            selectType[vehicle].Invoke(licenseNumber, color, numberOfWheels);
         } catch (KeyNotFoundException) {
             _ui.PrintErr("Unknow vehicle selected");
         }
     }
 
-    private void AddAirplane(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType) {
+    private void AddAirplane(string licenseNumber, Color color, uint numberOfWheels) {
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);                    
         try {
             _handler.AddVehicle(new Airplane(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats));
@@ -82,8 +83,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             _ui.PrintErr(ex.Message);
         }
     }
-    private void AddBoat(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
+    private void AddBoat(string licenseNumber, Color color, uint numberOfWheels)
     {
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint length = (uint)_ui.GetInt("Type the length: ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
@@ -91,7 +93,8 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             _ui.PrintErr(ex.Message);
         }
     }
-    private void AddBus(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType) {        
+    private void AddBus(string licenseNumber, Color color, uint numberOfWheels) {
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         bool canBend = _ui.GetBool("Can the bus bend (y/n)?: ");
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         try {
@@ -100,8 +103,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             _ui.PrintErr(ex.Message);
         }        
     }
-    private void AddCar(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
-    {       
+    private void AddCar(string licenseNumber, Color color, uint numberOfWheels)
+    {
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         string manufacturer = _ui.GetString("Type the manufacturer: ");
         try {
@@ -110,8 +114,9 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             _ui.PrintErr(ex.Message);
         }
     }
-    private void AddMotorcycle(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType)
-    {       
+    private void AddMotorcycle(string licenseNumber, Color color, uint numberOfWheels)
+    {
+        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
         try {
             _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));
