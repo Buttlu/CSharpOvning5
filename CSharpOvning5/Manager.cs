@@ -2,6 +2,7 @@
 using ConsoleUtils;
 using CSharpOvning5.Vehicles;
 using System.Drawing;
+using System.Text;
 
 namespace CSharpOvning5;
 
@@ -154,11 +155,38 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void SearchForVehiclesByAttributes()
     {
+        // Gets a list of vehicles that fit certain attributes
+
+        // Creates a copy of the parked vehicles and continuously
+        // narrows it down in the below if's.
         IEnumerable<Vehicle> vehicles = _handler.GetVehicles();
-        // ------------- WIP -------------
-        // "Do you want to filter for X?" (y/n)
-        // if y 
-        //     GarageHandlerHelpers.GetX();
-        //     vehicles = _handler.GetVehicleByX();
+
+        StringBuilder builder = new();
+        builder.AppendLine($"{Environment.NewLine}Filtering for vehicleds that:");
+
+        if (_ui.GetBool("Do you want to filter for number of wheels (y/n)? ")) {
+            int numberOfWheels = _ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
+            vehicles = _handler.GetVehiclesByWheelCount(vehicles, numberOfWheels);
+            builder.AppendLine($"\thave {numberOfWheels} number of wheels");
+        }
+
+        if (_ui.GetBool("Do you want to filter for the color (y/n)? ")) {
+            Color color = GarageHandlerHelpers.GetColor(_ui);
+            vehicles = _handler.GetVehiclesByColor(vehicles, color);
+            builder.AppendLine($"\tare {color.Name}");
+        }
+
+        if (_ui.GetBool("Do you want to filter for the type of vehicle (y/n)? ")) {
+            string type = _ui.GetString("Type the vehicle type: ");
+            vehicles = _handler.GetVehiclesByType(vehicles, type);
+            builder.AppendLine($"\tis a {type.ToLower()}");
+        }
+
+        builder.AppendLine($"{Environment.NewLine}Found {vehicles.Count()} vehicles:");
+        foreach (Vehicle vehicle in vehicles) {
+            builder.AppendLine(vehicle.ToString());
+        }
+
+        _ui.Println(builder.ToString());
     }
 }

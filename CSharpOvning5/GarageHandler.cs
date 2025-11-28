@@ -16,6 +16,7 @@ public class GarageHandler(int capacity) : IHandler
     public string DisplayGarageVehicles()
     {
         StringBuilder builder = new();
+        builder.AppendLine($"{Environment.NewLine}Displaying info for {_garage.Count()} vehicles.{Environment.NewLine}");
         foreach (var vehicle in _garage) {
             builder.AppendLine(vehicle.ToString());
         }
