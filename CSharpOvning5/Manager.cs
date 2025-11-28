@@ -46,7 +46,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         if (_handler is not null) {
             _ui.Println("This will replace the current garage, type 'q' to cancel");
             string? input = _ui.GetInput();
-            if (input is not null && Char.ToLower(input[0]) == 'q') return;
+            if (!string.IsNullOrWhiteSpace(input) && Char.ToLower(input[0]) == 'q') return;
         }
 
         int capacity = _ui.GetInt("Type number of vehicles that can be parked: ", mustBeAboveZero: true);
@@ -83,6 +83,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);
         try {
             _handler.RemoveVehicle(licenseNumber);
+            _ui.Println($"Removed vehicle {licenseNumber.ToUpper()}");
         } catch (ArgumentException ex) {
             _ui.PrintErr(ex.Message);
         }

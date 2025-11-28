@@ -28,7 +28,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
     internal void AddBoat(string licenseNumber, Color color, uint numberOfWheels)
     {
         FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        uint length = (uint)_ui.GetInt("Type the length: ", mustBeAboveZero: true);
+        uint length = (uint)_ui.GetInt("Type the length (whole meters): ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
             _ui.Println($"Boat {licenseNumber} parked in the garage");

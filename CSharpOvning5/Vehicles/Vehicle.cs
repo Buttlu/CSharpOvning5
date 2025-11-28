@@ -14,7 +14,7 @@ internal abstract partial class Vehicle
             if (!ValidateLicenseNumber().IsMatch(value))
                 throw new ArgumentException("Invalid license number format", value);
 
-            _licenseNumber = value;
+            _licenseNumber = value.ToUpper();
         }
     }
     internal Color Color { get; }
