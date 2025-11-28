@@ -1,15 +1,15 @@
 ﻿using CSharpOvning5.Vehicles;
 using System.Collections;
-using System.Text;
 
 namespace CSharpOvning5.GarageClasses;
 
-internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
+internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Vehicle
 {
     private readonly T?[] _garage = new T?[capacity];
 
     public void Add(T vehicle)
-    {       
+    {
+
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i] is null) {
                 _garage[i++] = vehicle;
@@ -21,7 +21,7 @@ internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 
     public void Remove(string licenseNumber)
     {
-        for (int i = 0; i < _garage.Length;i++) {
+        for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i]?.LicenseNumber == licenseNumber) {
                 _garage[i] = null;
                 return;

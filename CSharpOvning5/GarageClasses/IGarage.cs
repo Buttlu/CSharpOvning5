@@ -1,5 +1,11 @@
-﻿namespace CSharpOvning5.GarageClasses;
+﻿using CSharpOvning5.Vehicles;
 
-internal interface IGarage
+namespace CSharpOvning5.GarageClasses
 {
+    internal interface IGarage<T> : IEnumerable<T> where T : Vehicle
+    {
+        void Add(T vehicle);
+        void Remove(string licenseNumber);
+        //IEnumerator<T> GetEnumerator();
+    }
 }
