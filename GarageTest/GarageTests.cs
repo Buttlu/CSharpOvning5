@@ -36,6 +36,7 @@ public class GarageTests
 
         int afterCount = CountVehicles(garage);
 
+        // Check that the vehicle count was increased by 1
         Assert.Equal(prevCount+1, afterCount);
     }
 
@@ -43,7 +44,6 @@ public class GarageTests
     public void Add_AddsVehiclesPastLimit()
     {
         // Since it just needs to check for overflow, the limit can be lower.
-        // Changing limit from 10 to 1 saved about 20ms. (~50 -> ~30ms)
         int smallerLimit = 1;
         IGarage<Vehicle> garage = new Garage<Vehicle>(smallerLimit);
         for (int i = 0; i < smallerLimit; i++) {
@@ -53,8 +53,27 @@ public class GarageTests
         Assert.Throws<ArgumentOutOfRangeException>(() => garage.Add(_mockVehicle.Object));
     }
 
+    [Fact]
+    public void Remove_RemoveFoundVehicle_LengthDecreases()
+    {
+        IGarage<Vehicle> garage = new Garage<Vehicle>(_limit);
+        // Needs to add a vehicle in order to be able to remove it
+        // If Adding fails, the test can't contine so just immediately exit
+        int prevCount = CountVehicles(garage);
+        garage.Add(_mockVehicle.Object);
+        int afterCount = CountVehicles(garage);
+        if ((prevCount + 1) != afterCount)
+            Assert.Fail("Could not add vehicle to the garage. Cannot continue");
+
+        prevCount = afterCount;
+        garage.Remove(_mockVehicle.Object.LicenseNumber);
+        afterCount = CountVehicles(garage);
+        // Check that the vehicle count was decreased by 1
+        Assert.Equal(prevCount-1, afterCount);
+    }
+
     [Theory]
-    [InlineData(_validLicenseNumber)]
+    [InlineData(_validLicenseNumber)] // Vehicle not found
     [InlineData(_invalidLicenseNumber)]
     public void Remove_LicenseFormat_ThrowsArgumentException(string licenseNumber)
     {
