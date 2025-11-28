@@ -3,11 +3,11 @@ using ConsoleUtils;
 using CSharpOvning5.Vehicles;
 using System.Drawing;
 
-namespace CSharpOvning5;
+namespace CSharpOvning5.GarageClasses;
 
 internal static class GarageHandlerHelpers
 {
-    public static string GetLicenseNumber(IUI ui)
+    internal static string GetLicenseNumber(IUI ui)
     {
         do {
             string licenseNumber = ui.GetString("Type license number: ");
@@ -18,7 +18,7 @@ internal static class GarageHandlerHelpers
         } while (true);
     }
 
-    public static Color GetColor(IUI ui)
+    internal static Color GetColor(IUI ui)
     {
         string color = ui.GetString("Type color: ");
         Color newColor = Color.FromName(color);
@@ -31,7 +31,7 @@ internal static class GarageHandlerHelpers
         return newColor;
     }
 
-    public static FuelType GetFuelType(IMenuCLI ui)
+    internal static FuelType GetFuelType(IMenuCLI ui)
     {
         // Converts all the fuel types to a string array
         var fuelTypes = Enum.GetValues<FuelType>();

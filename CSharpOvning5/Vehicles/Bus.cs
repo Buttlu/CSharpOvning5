@@ -5,11 +5,11 @@ namespace CSharpOvning5.Vehicles;
 internal class Bus(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType, uint numberOfSeats, bool canBend) 
     : Vehicle(licenseNumber, color, numberOfWheels)
 {
-    public uint NumberOfSeats { get; } = numberOfSeats;
-    public FuelType FuelType { get; } = fuelType;
-    public bool CanBend { get; } = canBend;
+    internal uint NumberOfSeats { get; } = numberOfSeats;
+    internal FuelType FuelType { get; } = fuelType;
+    internal bool CanBend { get; } = canBend;
 
-    public override string ToString()
+    internal override string ToString()
     {
         return
             $"{base.ToString()}" +

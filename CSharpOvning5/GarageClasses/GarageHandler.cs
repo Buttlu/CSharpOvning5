@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Text;
 
-namespace CSharpOvning5;
+namespace CSharpOvning5.GarageClasses;
 
-public class GarageHandler(int capacity) : IHandler
+internal class GarageHandler(int capacity) : IHandler
 {
     private Garage<Vehicle> _garage = new(capacity);
     
-    public void CreateGarage(int capacity)
+    internal void CreateGarage(int capacity)
     {
         _garage = new Garage<Vehicle>(capacity);
     }

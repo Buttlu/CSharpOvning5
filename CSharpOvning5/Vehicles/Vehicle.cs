@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 
 namespace CSharpOvning5.Vehicles;
 
-public abstract partial class Vehicle
+internal abstract partial class Vehicle
 {
     private string _licenseNumber = null!;
-    public string LicenseNumber
+    internal string LicenseNumber
     {
         get => _licenseNumber;
         init {
@@ -17,11 +17,11 @@ public abstract partial class Vehicle
             _licenseNumber = value;
         }
     }
-    public Color Color { get; }
-    public uint NumberOfWheels { get; }
+    internal Color Color { get; }
+    internal uint NumberOfWheels { get; }
 
     // Regular constructor since otherwise the LicenseNumber.Init was never called
-    public Vehicle(string licenseNumber, Color color, uint numberOfWheels)
+    internal Vehicle(string licenseNumber, Color color, uint numberOfWheels)
     {
         LicenseNumber = licenseNumber;
         Color = color;
@@ -30,9 +30,9 @@ public abstract partial class Vehicle
 
     // Validates swedish plate format, e.g.: ABC123, ABC12E
     [GeneratedRegex("^[A-Z]{3}[0-9]{2}[A-Z0-9]$", RegexOptions.IgnoreCase)]
-    public static partial Regex ValidateLicenseNumber();
+    internal static partial Regex ValidateLicenseNumber();
 
-    public override string ToString()
+    internal override string ToString()
     {
         return
             $"Vehicle type: {GetType().Name}{Environment.NewLine}" +

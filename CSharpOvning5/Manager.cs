@@ -1,5 +1,6 @@
 ﻿using CommandLineMenu;
 using ConsoleUtils;
+using CSharpOvning5.GarageClasses;
 using CSharpOvning5.Vehicles;
 using System.Drawing;
 using System.Text;
@@ -11,7 +12,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
     private readonly IUI _ui = ui;
     private readonly IMenuCLI _menuCli = menuCli;
     private IHandler _handler = null!;
-    public void Run()
+    internal void Run()
     {
         CreateGarage();
 
@@ -58,6 +59,8 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
 
+        // Uses a dictionary so that the keys can be used in the CLI
+        // and it links each vehicle to the appropriate method
         Dictionary<string, Action<string, Color, uint>> selectType = new() {
             { "Airplane", AddAirplane }, 
             { "Boat", AddBoat }, 

@@ -3,9 +3,9 @@ using Microsoft.VisualBasic;
 using System.Collections;
 using System.Drawing;
 
-namespace CSharpOvning5
+namespace CSharpOvning5.GarageClasses
 {
-    public interface IHandler
+    internal interface IHandler
     {
         void AddVehicle(Vehicle vehicle);
         IEnumerable<Vehicle> GetVehicles();

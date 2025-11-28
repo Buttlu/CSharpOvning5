@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Text;
 
-namespace CSharpOvning5;
+namespace CSharpOvning5.GarageClasses;
 
-public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
+internal class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
 {
     private readonly T?[] _garage = new T?[capacity];
 
-    public void Add(T vehicle)
-    {
+    internal void Add(T vehicle)
+    {       
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i] is null) {
                 _garage[i++] = vehicle;
@@ -19,7 +19,7 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
         throw new ArgumentOutOfRangeException(nameof(vehicle), "Garage is null");
     }
 
-    public void Remove(string licenseNumber)
+    internal void Remove(string licenseNumber)
     {
         for (int i = 0; i < _garage.Length;i++) {
             if (_garage[i]?.LicenseNumber == licenseNumber) {
@@ -30,7 +30,7 @@ public class Garage<T>(int capacity) : IEnumerable<T> where T : Vehicle
         throw new ArgumentException("Vehicle not found", nameof(licenseNumber));
     }
 
-    public string GetGroups()
+    internal string GetGroups()
     {
         var groups = _garage.GroupBy(v => v?.GetType().Name)
                                         .Select(g =>

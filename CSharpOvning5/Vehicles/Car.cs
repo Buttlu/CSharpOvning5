@@ -5,11 +5,11 @@ namespace CSharpOvning5.Vehicles;
 internal class Car(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType, uint numberOfSeats, string manufacturer) 
     : Vehicle(licenseNumber, color, numberOfWheels)
 {
-    public uint NumberOfSeats { get; } = numberOfSeats; 
-    public FuelType FuelType { get; } = fuelType;
-    public string Manufacturer { get; } = manufacturer;
+    internal uint NumberOfSeats { get; } = numberOfSeats; 
+    internal FuelType FuelType { get; } = fuelType;
+    internal string Manufacturer { get; } = manufacturer;
 
-    public override string ToString()
+    internal override string ToString()
     {
         return
             $"{base.ToString()}" +

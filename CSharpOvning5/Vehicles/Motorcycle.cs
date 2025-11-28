@@ -5,11 +5,11 @@ namespace CSharpOvning5.Vehicles
     internal class Motorcycle(string licenseNumber, Color color, uint numberOfWheels, FuelType fuelType, bool hasSideCart) 
         : Vehicle(licenseNumber, color, numberOfWheels)
     {
-        public FuelType FuelType { get; } = fuelType;
+        internal FuelType FuelType { get; } = fuelType;
         // TODO: maybe add Add...() & Remove...() SideCart functions. 
-        public bool HasSideCart { get; } = hasSideCart;
+        internal bool HasSideCart { get; } = hasSideCart;
 
-        public override string ToString()
+        internal override string ToString()
         {
             return
                 $"{base.ToString()}" +
