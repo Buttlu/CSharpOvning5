@@ -111,16 +111,15 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         _ui.Println(vehicle.ToString() + Environment.NewLine);
     }
 
+    // Gets a list of vehicles that fit certain attributes
     private void SearchForVehiclesByAttributes()
     {
-        // Gets a list of vehicles that fit certain attributes
-
         // Creates a copy of the parked vehicles and continuously
         // narrows it down in the below if's.
         IEnumerable<Vehicle> vehicles = _handler.GetVehicles();
 
         StringBuilder builder = new();
-        builder.AppendLine($"{Environment.NewLine}Filtering for vehicleds that:");
+        builder.AppendLine($"{Environment.NewLine}Filtering for vehicles that:");
 
         // Filters applies optional filters for number of wheels, color, and vehicle type
         if (_ui.GetBool("Do you want to filter for number of wheels (y/n)? ")) {
