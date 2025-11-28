@@ -56,17 +56,17 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
     {
         string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);        
         Color color = GarageHandlerHelpers.GetColor(_ui);
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
 
         // Uses a dictionary so that the keys can be used in the CLI
         // and it links each vehicle to the appropriate method
+        ManagerHelpers helpers = new(_ui, _menuCli, _handler);
         Dictionary<string, Action<string, Color, uint>> selectType = new() {
-            { "Airplane", AddAirplane }, 
-            { "Boat", AddBoat }, 
-            { "Bus", AddBus }, 
-            { "Car", AddCar }, 
-            { "Motorcycle", AddMotorcycle }
+            { "Airplane", helpers.AddAirplane }, 
+            { "Boat", helpers.AddBoat }, 
+            { "Bus", helpers.AddBus }, 
+            { "Car", helpers.AddCar }, 
+            { "Motorcycle", helpers.AddMotorcycle }
         };
 
         var (_, vehicle) = _menuCli.CliMenu("Select the vehicle type", [..selectType.Keys]);        
@@ -75,58 +75,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         } catch (KeyNotFoundException) {
             _ui.PrintErr("Unknow vehicle selected");
         }
-    }
-
-    private void AddAirplane(string licenseNumber, Color color, uint numberOfWheels) {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);                    
-        try {
-            _handler.AddVehicle(new Airplane(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats));
-        } catch (ArgumentOutOfRangeException ex) {
-            _ui.PrintErr(ex.Message);
-        }
-    }
-    private void AddBoat(string licenseNumber, Color color, uint numberOfWheels)
-    {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        uint length = (uint)_ui.GetInt("Type the length: ", mustBeAboveZero: true);
-        try {
-            _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
-        } catch (ArgumentOutOfRangeException ex) {
-            _ui.PrintErr(ex.Message);
-        }
-    }
-    private void AddBus(string licenseNumber, Color color, uint numberOfWheels) {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        bool canBend = _ui.GetBool("Can the bus bend (y/n)?: ");
-        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
-        try {
-            _handler.AddVehicle(new Bus(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, canBend));
-        } catch (ArgumentOutOfRangeException ex) {
-            _ui.PrintErr(ex.Message);
-        }        
-    }
-    private void AddCar(string licenseNumber, Color color, uint numberOfWheels)
-    {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
-        string manufacturer = _ui.GetString("Type the manufacturer: ");
-        try {
-            _handler.AddVehicle(new Car(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, manufacturer));
-        } catch (ArgumentOutOfRangeException ex) {
-            _ui.PrintErr(ex.Message);
-        }
-    }
-    private void AddMotorcycle(string licenseNumber, Color color, uint numberOfWheels)
-    {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
-        bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
-        try {
-            _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));
-        } catch (ArgumentOutOfRangeException ex) {
-            _ui.PrintErr(ex.Message);
-        }     
-    }
+    }    
 
     private void RemoveVehicle()
     {
@@ -172,6 +121,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         StringBuilder builder = new();
         builder.AppendLine($"{Environment.NewLine}Filtering for vehicleds that:");
 
+        // Filters applies optional filters for number of wheels, color, and vehicle type
         if (_ui.GetBool("Do you want to filter for number of wheels (y/n)? ")) {
             int numberOfWheels = _ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
             vehicles = _handler.GetVehiclesByWheelCount(vehicles, numberOfWheels);
@@ -190,6 +140,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
             builder.AppendLine($"\tis a {type.ToLower()}");
         }
 
+        // Compiles the number of vehicles found that matches and prints out their info
         builder.AppendLine($"{Environment.NewLine}Found {vehicles.Count()} vehicles:");
         foreach (Vehicle vehicle in vehicles) {
             builder.AppendLine(vehicle.ToString());
