@@ -42,6 +42,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void CreateGarage()
     {
+        // If there is no garage, no warning needed
         if (_handler is not null) {
             _ui.Println("This will replace the current garage, type 'q' to cancel");
             string? input = _ui.GetInput();
