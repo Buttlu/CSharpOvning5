@@ -5,6 +5,7 @@ namespace CSharpOvning5.GarageClasses
 {
     internal interface IHandler
     {
+        string[] GetLicesenseNumbers {  get; }
         int ParkedVehicles { get; }
         void AddVehicle(Vehicle vehicle);
         IEnumerable<Vehicle> GetVehicles();

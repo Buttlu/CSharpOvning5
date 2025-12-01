@@ -15,7 +15,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
     // Gets the extra necessary attributes and creates the proper vehicles
     internal void AddAirplane(string licenseNumber, Color color, uint numberOfWheels)
     {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelTypeFromUser(_menuCli);
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Airplane(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats));
@@ -29,7 +29,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     internal void AddBoat(string licenseNumber, Color color, uint numberOfWheels)
     {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelTypeFromUser(_menuCli);
         uint length = (uint)_ui.GetInt("Type the length (whole meters): ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
@@ -43,7 +43,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     internal void AddBus(string licenseNumber, Color color, uint numberOfWheels)
     {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelTypeFromUser(_menuCli);
         bool canBend = _ui.GetBool("Can the bus bend (y/n)?: ");
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         try {
@@ -58,7 +58,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     internal void AddCar(string licenseNumber, Color color, uint numberOfWheels)
     {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelTypeFromUser(_menuCli);
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         string manufacturer = _ui.GetString("Type the manufacturer: ");
         try {
@@ -73,7 +73,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
 
     internal void AddMotorcycle(string licenseNumber, Color color, uint numberOfWheels)
     {
-        FuelType fuelType = GarageHandlerHelpers.GetFuelType(_menuCli);
+        FuelType fuelType = GarageHandlerHelpers.GetFuelTypeFromUser(_menuCli);
         bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
         try {
             _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));

@@ -9,6 +9,7 @@ internal class GarageHandler(int capacity) : IHandler
     private IGarage<Vehicle> _garage = new Garage<Vehicle>(capacity);
 
     public int ParkedVehicles => _garage.ParkedVehicles;
+    public string[] GetLicesenseNumbers => _garage.UsedLicenseNumbers;
 
     public string DisplayGarageVehicles()
     {

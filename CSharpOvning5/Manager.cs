@@ -55,8 +55,8 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void AddVehicle()
     {
-        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);        
-        Color color = GarageHandlerHelpers.GetColor(_ui);
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumberFromUser(_ui, _handler);
+        Color color = GarageHandlerHelpers.GetColorFromUser(_ui);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
 
         // Uses a dictionary so that the keys can be used in the CLI
@@ -80,7 +80,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void RemoveVehicle()
     {
-        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumberFromUser(_ui, _handler);
         try {
             _handler.RemoveVehicle(licenseNumber);
             _ui.Println($"Removed vehicle {licenseNumber.ToUpper()}");
@@ -103,7 +103,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void SearchForVehicleByLicenseNumber()
     {
-        string licenseNumber = GarageHandlerHelpers.GetLicenseNumber(_ui);
+        string licenseNumber = GarageHandlerHelpers.GetLicenseNumberFromUser(_ui, _handler);
         Vehicle? vehicle = _handler.GetVehicleByLicensenumber(licenseNumber);
         if (vehicle is null) {
             _ui.PrintErr($"No vehicle found with license number \"{licenseNumber}\"");
@@ -130,7 +130,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         }
 
         if (_ui.GetBool("Do you want to filter for the color (y/n)? ")) {
-            Color color = GarageHandlerHelpers.GetColor(_ui);
+            Color color = GarageHandlerHelpers.GetColorFromUser(_ui);
             vehicles = _handler.GetVehiclesByColor(vehicles, color);
             builder.AppendLine($"\tare {color.Name}");
         }

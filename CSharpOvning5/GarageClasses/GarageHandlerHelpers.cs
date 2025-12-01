@@ -7,18 +7,21 @@ namespace CSharpOvning5.GarageClasses;
 
 internal static class GarageHandlerHelpers
 {
-    internal static string GetLicenseNumber(IUI ui)
+    internal static string GetLicenseNumberFromUser(IUI ui, IHandler handler)
     {
         do {
             string licenseNumber = ui.GetString("Type license number: ");
-            if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber)) {
-                return licenseNumber;
+            if (handler.GetLicesenseNumbers.Contains(licenseNumber, StringComparer.OrdinalIgnoreCase)) {
+                ui.PrintErr("License number is already in use");
             }
-            ui.PrintErr("Invalid format, try again");
+            else if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber)) {
+                return licenseNumber;
+            } else
+                ui.PrintErr("Invalid format, try again");
         } while (true);
     }
 
-    internal static Color GetColor(IUI ui)
+    internal static Color GetColorFromUser(IUI ui)
     {
         string color = ui.GetString("Type color: ");
         Color newColor = Color.FromName(color);
@@ -32,7 +35,7 @@ internal static class GarageHandlerHelpers
         return newColor;
     }
 
-    internal static FuelType GetFuelType(IMenuCLI ui)
+    internal static FuelType GetFuelTypeFromUser(IMenuCLI ui)
     {
         // Converts all the fuel types to a string array
         var fuelTypes = Enum.GetValues<FuelType>();
