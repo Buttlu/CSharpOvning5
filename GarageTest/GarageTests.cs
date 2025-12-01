@@ -1,7 +1,6 @@
 ﻿using CSharpOvning5.GarageClasses;
 using CSharpOvning5.Vehicles;
 using Moq;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace UnitTest;
@@ -51,6 +50,14 @@ public class GarageTests
         }
 
         Assert.Throws<ArgumentOutOfRangeException>(() => garage.Add(_mockVehicle.Object));
+    }
+
+    [Fact]
+    public void Add_AddNull_ThrowNullException() 
+    {
+        IGarage<Vehicle> garage = new Garage<Vehicle>(2);
+
+        Assert.Throws<ArgumentNullException>(() => garage.Add(null!));
     }
 
     [Fact]

@@ -25,7 +25,7 @@ internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Ve
     public void Remove(string licenseNumber)
     {
         // Validates the license number first. 
-        if (!Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
+        if (!Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber) || string.IsNullOrWhiteSpace(licenseNumber))
             throw new ArgumentException("Invalid license number", nameof(licenseNumber));
 
         licenseNumber = licenseNumber.ToLower();
