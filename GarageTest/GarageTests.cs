@@ -13,11 +13,11 @@ public class GarageTests
     private readonly Mock<Vehicle> _mockVehicle = new(_validLicenseNumber, Color.White, (uint)0);
     
     [Fact]
-    public void Add_AddVehicle_LengthIncreased()
+    public void Add_AddVehicle()
     {
         // Need to specifially test the Add method, simplified initialization bypasses Add.
 #pragma warning disable IDE0028 // Simplify collection initialization
-        IGarage<Vehicle> garage = new Garage<Vehicle>(_limit);
+        var garage = new Garage<Vehicle>(_limit);
 #pragma warning restore IDE0028 // Simplify collection initialization
 
         garage.Add(_mockVehicle.Object);
@@ -30,7 +30,7 @@ public class GarageTests
     {
         // Since it just needs to check for overflow, the limit can be lower.
         int smallerLimit = 1;
-        IGarage<Vehicle> garage = new Garage<Vehicle>(smallerLimit);
+        var garage = new Garage<Vehicle>(smallerLimit);
         for (int i = 0; i < smallerLimit; i++) {
             garage.Add(_mockVehicle.Object);
         }
@@ -41,17 +41,17 @@ public class GarageTests
     [Fact]
     public void Add_AddNull_ThrowNullException() 
     {
-        IGarage<Vehicle> garage = new Garage<Vehicle>(2);
+        var garage = new Garage<Vehicle>(2);
 
         Assert.Throws<ArgumentNullException>(() => garage.Add(null!));
     }
 
     [Fact]
-    public void Remove_RemoveFoundVehicle_LengthDecreases()
+    public void Remove_RemoveFoundVehicle()
     {
         // Needs to add a vehicle in order to be able to remove it
         // If Adding fails, the test can't contine so just immediately exit
-        IGarage<Vehicle> garage = new Garage<Vehicle>(_limit) {
+        var garage = new Garage<Vehicle>(_limit) {
             _mockVehicle.Object
         };
 
@@ -64,7 +64,7 @@ public class GarageTests
     [InlineData(_invalidLicenseNumber)]
     public void Remove_LicenseFormat_ThrowsArgumentException(string licenseNumber)
     {
-        IGarage<Vehicle> garage = new Garage<Vehicle>(_limit);
+        var garage = new Garage<Vehicle>(_limit);
 
         Assert.Throws<ArgumentException>(() => garage.Remove(licenseNumber));
     }
