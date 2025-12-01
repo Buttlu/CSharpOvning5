@@ -47,7 +47,7 @@ internal static class GarageHandlerHelpers
         return fuelType;
     }
 
-    internal static string GenerateRandomLicenseNumber()
+    internal static string GenerateRandomLicenseNumber(IHandler handler)
     {
         Random rnd = new();
         char[] chars = [
@@ -58,7 +58,8 @@ internal static class GarageHandlerHelpers
             'Y','Z','0','1','2','3',
             '4','5','6','7','8','9'];
         int numberOfLetters = 26;
-        return new string([
+        // has to match [A-Z]{3}[0-9]{2}[A-Z0-9]
+        string output = new([
             chars[rnd.Next(numberOfLetters)], // [A-Z]
             chars[rnd.Next(numberOfLetters)], // [A-Z]
             chars[rnd.Next(numberOfLetters)], // [A-Z]
@@ -66,5 +67,11 @@ internal static class GarageHandlerHelpers
             chars[rnd.Next(numberOfLetters, chars.Length)], // [0-9]
             chars[rnd.Next(chars.Length)], // [A-Z0-9]
             ]);
+
+        if (handler.GetLicesenseNumbers.Contains(output)) {
+            output = GenerateRandomLicenseNumber(handler);
+        }
+
+        return output;
     }
 }
