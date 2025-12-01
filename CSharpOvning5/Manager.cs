@@ -2,22 +2,27 @@
 using ConsoleUtils;
 using CSharpOvning5.GarageClasses;
 using CSharpOvning5.Vehicles;
+using Microsoft.Extensions.Configuration;
 using System.Drawing;
 using System.Text;
 
 namespace CSharpOvning5;
 
-internal class Manager(IUI ui, IMenuCLI menuCli)
+internal class Manager(IUI ui, IMenuCLI menuCli, IConfiguration config)
 {
     private readonly IUI _ui = ui;
     private readonly IMenuCLI _menuCli = menuCli;
     private IHandler _handler = null!;
     internal void Run()
     {
-        CreateGarage();
+        if (int.TryParse(config.GetSection("initial_garage_size").Value, out int size))
+            _handler = new GarageHandler(size);
+        else
+            CreateGarage();
 
-        if (!_handler.Seed())
-            _ui.PrintErr("Garage is full");
+        if (_ui.GetBool("Do you want to seed (y/n)? "))
+            if (!_handler.Seed())
+                _ui.PrintErr("Garage is full");
 
         // Dictionary that holds the main menu options and which method they use
         Dictionary<string, Action> mainMenuOptions = new() {
