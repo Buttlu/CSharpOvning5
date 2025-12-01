@@ -7,6 +7,8 @@ internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Ve
 {
     private readonly T?[] _garage = new T?[capacity];
 
+    public int ParkedVehicles => _garage.Count(v => v is not null);
+
     public void Add(T vehicle)
     {
         ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
