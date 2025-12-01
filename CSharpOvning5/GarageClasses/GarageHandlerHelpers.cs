@@ -30,7 +30,7 @@ internal static class GarageHandlerHelpers
         Color newColor = Color.FromName(color);
         // If the alpha (A) channel is 0, that means a color wasn't found 
         // (if the name is not know FromName returns new Color(0,0,0,0))
-        while(newColor.A == 0) {
+        while (newColor.A == 0) {
             ui.PrintErr("A known color was not found, please try again");
             color = ui.GetString("Color name: ");
             newColor = Color.FromName(color);
@@ -61,7 +61,8 @@ internal static class GarageHandlerHelpers
             'Y','Z','0','1','2','3',
             '4','5','6','7','8','9'];
         int numberOfLetters = 26;
-        // has to match [A-Z]{3}[0-9]{2}[A-Z0-9]
+        
+        // Has to match [A-Z]{3}[0-9]{2}[A-Z0-9]
         string output = new([
             chars[rnd.Next(numberOfLetters)], // [A-Z]
             chars[rnd.Next(numberOfLetters)], // [A-Z]

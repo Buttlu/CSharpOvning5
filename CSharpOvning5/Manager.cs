@@ -15,6 +15,7 @@ internal class Manager(IUI ui, IMenuCLI menuCli, IConfiguration config)
     private IHandler _handler = null!;
     internal void Run()
     {
+        // Ask the user if the parsing fails
         if (int.TryParse(config.GetSection("initial_garage_size").Value, out int size))
             _handler = new GarageHandler(size);
         else
