@@ -7,22 +7,28 @@ namespace UnitTest;
 
 public class GarageTests
 {
-    private const string _validLicenseNumber = "ABC123";
-    private const string _invalidLicenseNumber = "ABC12";
-    private const int _limit = 5;    
-    private readonly Mock<Vehicle> _mockVehicle = new(_validLicenseNumber, Color.White, (uint)0);
-    
+
+    private const int _limit = 5;
+    private static readonly IHandler _handler = new GarageHandler(10);
+
+    // Generates a mock vehicle object
+    private Vehicle GetMockVehicle()
+        => new Mock<Vehicle>(
+            GarageHandlerHelpers.GenerateRandomLicenseNumber(_handler),
+            Color.White,
+            (uint)0
+        ).Object;
+
     [Fact]
     public void Add_AddVehicle()
     {
-        // Need to specifially test the Add method, simplified initialization bypasses Add.
-#pragma warning disable IDE0028 // Simplify collection initialization
         var garage = new Garage<Vehicle>(_limit);
-#pragma warning restore IDE0028 // Simplify collection initialization
 
-        garage.Add(_mockVehicle.Object);
+        Vehicle vehicle = GetMockVehicle();
 
-        Assert.Contains(_mockVehicle.Object, garage);
+        garage.Add(vehicle);
+
+        Assert.Contains(vehicle, garage);
     }
 
     [Fact]
@@ -32,10 +38,10 @@ public class GarageTests
         int smallerLimit = 1;
         var garage = new Garage<Vehicle>(smallerLimit);
         for (int i = 0; i < smallerLimit; i++) {
-            garage.Add(_mockVehicle.Object);
+            garage.Add(GetMockVehicle());
         }
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => garage.Add(_mockVehicle.Object));
+        Assert.Throws<ArgumentOutOfRangeException>(() => garage.Add(GetMockVehicle()));
     }
 
     [Fact]
@@ -51,17 +57,18 @@ public class GarageTests
     {
         // Needs to add a vehicle in order to be able to remove it
         // If Adding fails, the test can't contine so just immediately exit
+        Vehicle vehicle = GetMockVehicle();
         var garage = new Garage<Vehicle>(_limit) {
-            _mockVehicle.Object
+            vehicle
         };
 
-        garage.Remove(_mockVehicle.Object.LicenseNumber);
-        Assert.DoesNotContain(_mockVehicle.Object, garage);
+        garage.Remove(vehicle.LicenseNumber);
+        Assert.DoesNotContain(vehicle, garage);
     }
 
     [Theory]
-    [InlineData(_validLicenseNumber)] // Vehicle not found
-    [InlineData(_invalidLicenseNumber)]
+    [InlineData("ABC123")] // Valid but not found
+    [InlineData("ABC12")]
     public void Remove_LicenseFormat_ThrowsArgumentException(string licenseNumber)
     {
         var garage = new Garage<Vehicle>(_limit);
