@@ -63,11 +63,11 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         // and it links each vehicle to the appropriate method
         ManagerHelpers helpers = new(_ui, _menuCli, _handler);
         Dictionary<string, Action<string, Color, uint>> selectType = new() {
-            { "Airplane", helpers.AddAirplane }, 
-            { "Boat", helpers.AddBoat }, 
-            { "Bus", helpers.AddBus }, 
-            { "Car", helpers.AddCar }, 
-            { "Motorcycle", helpers.AddMotorcycle }
+            { Vehicle.Airplane, helpers.AddAirplane }, 
+            { Vehicle.Boat, helpers.AddBoat }, 
+            { Vehicle.Bus, helpers.AddBus }, 
+            { Vehicle.Car, helpers.AddCar }, 
+            { Vehicle.Motorcycle, helpers.AddMotorcycle }
         };
 
         var (_, vehicle) = _menuCli.CliMenu("Select the vehicle type", [..selectType.Keys]);        
