@@ -10,14 +10,19 @@ internal static class GarageHandlerHelpers
     internal static string GetLicenseNumberFromUser(IUI ui, IHandler handler)
     {
         do {
-            string licenseNumber = ui.GetString("Type license number: ");
-            if (handler.GetLicesenseNumbers.Contains(licenseNumber, StringComparer.OrdinalIgnoreCase)) {
-                ui.PrintErr("License number is already in use");
-            }
-            else if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber)) {
+            ui.Print("Type license number (leave blank to get random): ");
+            string? licenseNumber = ui.GetInput();
+            
+            if (string.IsNullOrWhiteSpace(licenseNumber)) {
+                licenseNumber = GenerateRandomLicenseNumber(handler);
+                ui.Println($"Generated: {licenseNumber}");
                 return licenseNumber;
-            } else
-                ui.PrintErr("Invalid format, try again");
+            } else if (handler.GetLicesenseNumbers.Contains(licenseNumber, StringComparer.OrdinalIgnoreCase))
+                ui.PrintErr("License number is already in use");            
+            else if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
+                return licenseNumber;            
+            else
+                ui.PrintErr("Invalid license number, try again");
         } while (true);
     }
 
