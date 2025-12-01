@@ -9,6 +9,8 @@ internal class Garage<T>(int capacity) : IEnumerable<T>, IGarage<T> where T : Ve
 
     public void Add(T vehicle)
     {
+        ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
+
         // Loops through the array until it finds the first null entry, and replaces it
         for (int i = 0; i < _garage.Length; i++) {
             if (_garage[i] is null) {

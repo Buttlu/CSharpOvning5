@@ -22,6 +22,8 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
             _ui.Println($"Airplane {licenseNumber} parked in the garage");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
+        } catch (ArgumentNullException) {
+            _ui.PrintErr("Vehicle is null");
         }
     }
 
@@ -34,6 +36,8 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
             _ui.Println($"Boat {licenseNumber} parked in the garage");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
+        } catch (ArgumentNullException) {
+            _ui.PrintErr("Vehicle is null");
         }
     }
 
@@ -47,6 +51,8 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
             _ui.Println($"Bus {licenseNumber} parked in the garage");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
+        } catch (ArgumentNullException) {
+            _ui.PrintErr("Vehicle is null");
         }
     }
 
@@ -60,6 +66,8 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
             _ui.Println($"Car {licenseNumber} parked in the garage");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
+        } catch (ArgumentNullException) {
+            _ui.PrintErr("Vehicle is null");
         }
     }
 
@@ -72,6 +80,8 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
             _ui.Println($"Motorcycle {licenseNumber} parked in the garage");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
+        } catch (ArgumentNullException) {
+            _ui.PrintErr("Vehicle is null");
         }
     }
 }
