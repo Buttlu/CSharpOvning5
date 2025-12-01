@@ -63,7 +63,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         string manufacturer = _ui.GetString("Type the manufacturer: ");
         try {
             _handler.AddVehicle(new Car(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, manufacturer));
-            _ui.Println($"{Environment.NewLine} Car {licenseNumber} parked in the garage {Environment.NewLine}");
+            _ui.Println($"{Environment.NewLine}Car {licenseNumber} parked in the garage {Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {
@@ -77,7 +77,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
         try {
             _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));
-            _ui.Println($"{Environment.NewLine} Motorcycle {licenseNumber} parked in the garage {Environment.NewLine}");
+            _ui.Println($"{Environment.NewLine}Motorcycle {licenseNumber} parked in the garage {Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {

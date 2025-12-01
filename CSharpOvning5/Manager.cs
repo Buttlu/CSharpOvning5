@@ -34,9 +34,12 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
         string key;
         bool first = true;
         do {
+            _ui.Clear();
             (_, key) = _menuCli.CliMenu("Main menu",  first, [.. mainMenuOptions.Keys]);
             mainMenuOptions[key].Invoke();
             first = false;
+            _ui.Println("Press any key to continue...");
+            _ui.GetKey(true);
         } while (true);
     }
 
