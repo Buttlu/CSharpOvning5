@@ -17,9 +17,7 @@ internal static class GarageHandlerHelpers
                 licenseNumber = GenerateRandomLicenseNumber(handler);
                 ui.Println($"Generated: {licenseNumber}");
                 return licenseNumber;
-            } else if (handler.GetLicesenseNumbers.Contains(licenseNumber, StringComparer.OrdinalIgnoreCase))
-                ui.PrintErr("License number is already in use");            
-            else if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
+            } else if (Vehicle.ValidateLicenseNumber().IsMatch(licenseNumber))
                 return licenseNumber;            
             else
                 ui.PrintErr("Invalid license number, try again");

@@ -19,7 +19,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Airplane(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats));
-            _ui.Println($"Airplane {licenseNumber} parked in the garage");
+            _ui.Println($"{Environment.NewLine}Airplane {licenseNumber} parked in the garage{Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {
@@ -33,7 +33,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         uint length = (uint)_ui.GetInt("Type the length (whole meters): ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Boat(licenseNumber, color, numberOfWheels, fuelType, length));
-            _ui.Println($"Boat {licenseNumber} parked in the garage");
+            _ui.Println($"{Environment.NewLine}Boat {licenseNumber} parked in the garage{Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {
@@ -48,7 +48,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         uint numberOfSeats = (uint)_ui.GetInt("Type the number of seats: ", mustBeAboveZero: true);
         try {
             _handler.AddVehicle(new Bus(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, canBend));
-            _ui.Println($"Bus {licenseNumber} parked in the garage");
+            _ui.Println($"{Environment.NewLine}Bus {licenseNumber} parked in the garage{Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {
@@ -63,7 +63,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         string manufacturer = _ui.GetString("Type the manufacturer: ");
         try {
             _handler.AddVehicle(new Car(licenseNumber, color, numberOfWheels, fuelType, numberOfSeats, manufacturer));
-            _ui.Println($"Car {licenseNumber} parked in the garage");
+            _ui.Println($"{Environment.NewLine} Car {licenseNumber} parked in the garage {Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {
@@ -77,7 +77,7 @@ internal class ManagerHelpers(IUI ui, IMenuCLI menuCli, IHandler handler)
         bool hasSideCart = _ui.GetBool("Does the motorcycle have a side-cart (y/n)?: ");
         try {
             _handler.AddVehicle(new Motorcycle(licenseNumber, color, numberOfWheels, fuelType, hasSideCart));
-            _ui.Println($"Motorcycle {licenseNumber} parked in the garage");
+            _ui.Println($"{Environment.NewLine} Motorcycle {licenseNumber} parked in the garage {Environment.NewLine}");
         } catch (ArgumentOutOfRangeException ex) {
             _ui.PrintErr(ex.Message);
         } catch (ArgumentNullException) {

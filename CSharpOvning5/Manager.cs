@@ -55,7 +55,13 @@ internal class Manager(IUI ui, IMenuCLI menuCli)
 
     private void AddVehicle()
     {
-        string licenseNumber = GarageHandlerHelpers.GetLicenseNumberFromUser(_ui, _handler);
+        string licenseNumber;
+        do {
+            licenseNumber = GarageHandlerHelpers.GetLicenseNumberFromUser(_ui, _handler);
+            if (!_handler.GetLicesenseNumbers.Contains(licenseNumber, StringComparer.OrdinalIgnoreCase))
+                break;
+            _ui.PrintErr("License number is already in use");
+        } while (true);
         Color color = GarageHandlerHelpers.GetColorFromUser(_ui);
         uint numberOfWheels = (uint)_ui.GetInt("Type the number of wheels: ", mustBeAboveZero: true);
 
